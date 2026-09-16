@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% block title %}Progress - YogaFlow{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>📊 Your Progress</h1>
+    <p>Track your yoga journey over time</p>
+</div>
+
+<div class="stats-grid">
+    <div class="stat-card">
+        <div class="stat-icon">🧘</div>
+        <div class="stat-value">{{ stats.total_sessions }}</div>
+        <div class="stat-label">Total Sessions</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon">⏱️</div>
+        <div class="stat-value">{{ stats.total_minutes }}</div>
+        <div class="stat-label">Total Minutes</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon">🔥</div>
+        <div class="stat-value">{{ stats.streak }}</div>
+        <div class="stat-label">Day Streak</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-icon">🏆</div>
+        <div class="stat-value">{{ stats.most_practiced }}</div>
+        <div class="stat-label">Most Practiced</div>
+    </div>
+</div>
+
+{% if stats.weekly_distribution %}
+<div class="chart-section">
+    <h2>📅 Weekly Distribution</h2>
+    <div class="bar-chart">
+        {% set days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] %}
+        {% set max_val = stats.weekly_distribution | max %}
+        {% if max_val == 0 %}{% set max_val = 1 %}{% endif %}
+        {% for i in range(7) %}
+        <div class="bar-item">
+            <div class="bar" style="height: {{ (stats.weekly_distribution[i] / max_val * 200) | int }}px;">
+                <span class="bar-value">{{ stats.weekly_distribution[i] }}</span>
+            </div>
+            <span class="bar-label">{{ days[i] }}</span>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+
+{% if stats.asana_frequency %}
+<div class="frequency-section">
+    <h2>🏆 Top Practiced Asanas</h2>
+    <div class="frequency-list">
+        {% for asana, count in stats.asana_frequency.items() %}
+        <div class="freq-item">
+            <span class="freq-name">{{ asana }}</span>
+            <div class="freq-bar">
+                <div class="freq-fill" style="width: {{ count * 20 }}%"></div>
+            </div>
+            <span class="freq-count">{{ count }}x</span>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+
+{% if logs %}
+<div class="logs-table-section">
+    <h2>📋 All Practice Logs</h2>
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Asana</th>
+                <th>Duration</th>
+                <th>Intensity</th>
+                <th>Mood</th>
+                <th>Notes</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for log in logs %}
+            <tr>
+                <td>{{ log.date }}</td>
+                <td><strong>{{ log.asana }}</strong><br><small>{{ log.english_name }}</small></td>
+                <td>{{ log.duration }} min</td>
+                <td>{{ "⭐" * log.intensity }}</td>
+                <td>{{ log.mood }}</td>
+                <td><small>{{ log.notes[:50] }}{% if log.notes|length > 50 %}...{% endif %}</small></td>
+                <!-- SQL UPDATE: Using log.id instead of loop.index0 -->
+                <td><a href="{{ url_for('delete_log', log_id=log.id) }}" class="btn-delete" onclick="return confirm('Delete this log?')">🗑️</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="empty-state">
+    <h2>🧘 No practices logged yet</h2>
+    <p>Start your journey by logging your first yoga session!</p>
+    <a href="{{ url_for('log_practice') }}" class="btn-primary">Log Your First Practice</a>
+</div>
+{% endif %}
+{% endblock %}

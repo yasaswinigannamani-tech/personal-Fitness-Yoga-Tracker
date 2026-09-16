@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Yoga Tracker{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">
+            <span class="logo">🧘</span>
+            <a href="{{ url_for('index') }}">YogaFlow</a>
+        </div>
+        {% if session.get('user_email') %}
+        <ul class="nav-menu">
+            <li><a href="{{ url_for('index') }}" class="{% if request.endpoint == 'index' %}active{% endif %}">🏠 Dashboard</a></li>
+            <li><a href="{{ url_for('log_practice') }}" class="{% if request.endpoint == 'log_practice' %}active{% endif %}">📝 Log Practice</a></li>
+            <li><a href="{{ url_for('weekly_plan') }}" class="{% if request.endpoint == 'weekly_plan' %}active{% endif %}">📅 Weekly Plan</a></li>
+            <li><a href="{{ url_for('progress') }}" class="{% if request.endpoint == 'progress' %}active{% endif %}">📊 Progress</a></li>
+            <li><a href="{{ url_for('about') }}" class="{% if request.endpoint == 'about' %}active{% endif %}">ℹ️ About</a></li>
+            <li><a href="{{ url_for('logout') }}" class="logout-btn">🚪 Logout</a></li>
+        </ul>
+        {% endif %}
+    </nav>
+
+    <main class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash flash-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+        <p>🧘 Personal Fitness & Yoga Tracker | Project 13 | R23 Curriculum</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block title %}Weekly Plan - YogaFlow{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>📅 Your Personalized Weekly Plan</h1>
+    <p>AI-generated yoga routine based on your profile</p>
+</div>
+
+<div class="ai-message">
+    <div class="ai-bubble">
+        <h3>🤖 LLM Coach Says:</h3>
+        <p>{{ plan_data.motivation }}</p>
+        <p class="goal-tip">💡 {{ plan_data.goal_tip }}</p>
+        <small>Generated: {{ plan_data.generated_at }} | Practices logged: {{ plan_data.practiced_count }}</small>
+    </div>
+</div>
+
+<div class="weekly-plan-grid">
+    {% for day_plan in plan_data.plan %}
+    <div class="day-card">
+        <div class="day-header">
+            <h2>{{ day_plan.day }}</h2>
+            <span class="day-theme">{{ day_plan.theme }}</span>
+        </div>
+
+        <div class="day-content">
+            <h4>🧘 Asanas ({{ day_plan.asanas|length }})</h4>
+            <ul class="asana-list">
+                {% for asana in day_plan.asanas %}
+                <li>
+                    <div class="asana-item">
+                        <strong>{{ asana.name }}</strong>
+                        <span class="asana-english">{{ asana.english_name }}</span>
+                        <span class="asana-time">{{ asana.duration_minutes }} min</span>
+                        <small>{{ asana.benefit }}</small>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+
+            <h4>🌬️ Pranayama</h4>
+            <div class="pranayama-box">
+                <strong>{{ day_plan.pranayama.name }}</strong> ({{ day_plan.pranayama.english }})
+                <br><small>{{ day_plan.pranayama.duration }} min | {{ day_plan.pranayama.benefit }}</small>
+            </div>
+
+            {% if day_plan.meditation %}
+            <h4>🧠 Meditation</h4>
+            <div class="meditation-box">
+                <strong>{{ day_plan.meditation.name }}</strong>
+                <br><small>{{ day_plan.meditation.duration }} min | {{ day_plan.meditation.benefit }}</small>
+            </div>
+            {% endif %}
+
+            <div class="total-time">Total: {{ day_plan.total_time }} min</div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="cta-section">
+    <a href="{{ url_for('log_practice') }}" class="btn-primary btn-large">📝 Log Today's Practice</a>
+</div>
+{% endblock %}

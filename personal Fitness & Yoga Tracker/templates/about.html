@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block title %}About - YogaFlow{% endblock %}
+
+{% block content %}
+<div class="about-container">
+    <div class="page-header">
+        <h1>ℹ️ About This Project</h1>
+    </div>
+
+    <div class="about-grid">
+        <div class="about-card">
+            <h2>📚 Project Details</h2>
+            <table class="info-table">
+                <tr><td><strong>Project</strong></td><td>Project 13: Personal Fitness & Yoga Tracker</td></tr>
+                <tr><td><strong>Combined Subjects</strong></td><td>Health & Wellness + Programming + Communicative English</td></tr>
+                <tr><td><strong>Topics Integrated</strong></td><td>Yoga practices, Arrays, Technical writing</td></tr>
+                <tr><td><strong>AI/LLM Layer</strong></td><td>LLM generates personalized yoga routines</td></tr>
+                <tr><td><strong>Coding Framework</strong></td><td>Python + File I/O + Simple menu system</td></tr>
+                <tr><td><strong>Outcome</strong></td><td>Web app: Log practice → get weekly plan</td></tr>
+                <tr><td><strong>R23 Alignment</strong></td><td>Sem-II Wellness + Sem-II English</td></tr>
+            </table>
+        </div>
+
+        <div class="about-card">
+            <h2>🔧 Technical Implementation</h2>
+            <h3>Arrays Used:</h3>
+            <ul>
+                <li><code>BEGINNER_ASANAS</code>, <code>INTERMEDIATE_ASANAS</code>, <code>ADVANCED_ASANAS</code> - Arrays of yoga poses</li>
+                <li><code>PRANAYAMA</code>, <code>MEDITATION</code> - Arrays for breathing & meditation techniques</li>
+                <li><code>day_themes</code> - Array of daily focus themes</li>
+                <li><code>weekly_dist</code> - Array tracking practice distribution</li>
+                <li><code>logs</code> - Array of practice log entries</li>
+            </ul>
+
+            <h3>File I/O:</h3>
+            <ul>
+                <li><code>logs.json</code> - Stores all practice logs</li>
+                <li><code>users.json</code> - Stores user profiles</li>
+                <li>Functions: <code>read_logs()</code>, <code>write_logs()</code>, <code>read_users()</code>, <code>write_users()</code></li>
+            </ul>
+
+            <h3>LLM Layer:</h3>
+            <ul>
+                <li><code>generate_weekly_plan()</code> - Creates personalized 7-day yoga plan</li>
+                <li><code>analyze_progress()</code> - Analyzes practice history using arrays</li>
+                <li>Rule-based AI mimicking LLM behavior for routine generation</li>
+            </ul>
+        </div>
+
+        <div class="about-card">
+            <h2>🧘 Yoga Practices Covered</h2>
+            <p>This project integrates knowledge from the Sem-II Wellness course:</p>
+            <ul>
+                <li><strong>Asanas</strong>: Physical postures for strength & flexibility</li>
+                <li><strong>Pranayama</strong>: Breathing techniques for energy control</li>
+                <li><strong>Meditation</strong>: Mental practices for mindfulness</li>
+                <li><strong>Surya Namaskar</strong>: Sun salutation sequence</li>
+            </ul>
+        </div>
+
+        <div class="about-card">
+            <h2>✍️ Technical Writing Component</h2>
+            <p>From Communicative English (Sem-II):</p>
+            <ul>
+                <li>Practice notes field encourages reflective writing</li>
+                <li>Documentation follows technical writing standards</li>
+                <li>UI text uses clear, professional communication</li>
+                <li>Progress reports present data in structured format</li>
+            </ul>
+        </div>
+
+        <div class="about-card">
+            <h2>🚀 How to Use</h2>
+            <ol>
+                <li><strong>Register</strong> with your email and fitness level</li>
+                <li><strong>Log Practice</strong> after each yoga session</li>
+                <li><strong>Generate Weekly Plan</strong> for AI-personalized routines</li>
+                <li><strong>View Progress</strong> to track your journey</li>
+                <li><strong>Update Profile</strong> as your level changes</li>
+            </ol>
+        </div>
+    </div>
+</div>
+{% endblock %}

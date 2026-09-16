@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block title %}Log Practice - YogaFlow{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>📝 Log Your Practice</h1>
+    <p>Record your yoga session to track your journey</p>
+</div>
+
+<div class="form-container">
+    <form method="POST" class="yoga-form">
+        <div class="form-group">
+            <label>🧘 Select Asana</label>
+            <select name="asana" id="asanaSelect" onchange="updateEnglishName()">
+                <option value="">-- Choose Asana --</option>
+                {% for sanskrit, english in asanas %}
+                <option value="{{ sanskrit }}" data-english="{{ english }}">{{ sanskrit }} ({{ english }})</option>
+                {% endfor %}
+                <option value="custom">Other (Custom)</option>
+            </select>
+        </div>
+
+        <div class="form-group" id="customAsanaGroup" style="display:none;">
+            <label>✏️ Custom Asana Name</label>
+            <input type="text" name="custom_asana" placeholder="Enter asana name">
+        </div>
+
+        <div class="form-group">
+            <label>📛 English Name</label>
+            <input type="text" name="english_name" id="englishName" placeholder="English name of asana">
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>📅 Date</label>
+                <input type="date" name="date" value="{{ today }}" required>
+            </div>
+            <div class="form-group">
+                <label>⏱️ Duration (minutes)</label>
+                <input type="number" name="duration" value="15" min="1" max="180" required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>💪 Intensity Level: <span id="intensityValue">3</span>/5</label>
+            <input type="range" name="intensity" min="1" max="5" value="3"
+                   oninput="document.getElementById('intensityValue').textContent=this.value">
+        </div>
+
+        <div class="form-group">
+            <label>😊 Mood</label>
+            <select name="mood">
+                <option value="😊 Happy">😊 Happy</option>
+                <option value="😌 Calm">😌 Calm</option>
+                <option value="😐 Neutral">😐 Neutral</option>
+                <option value="😴 Tired">😴 Tired</option>
+                <option value="😤 Energized">😤 Energized</option>
+                <option value="🙏 Grateful">🙏 Grateful</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>📔 Notes (Technical Writing Practice)</label>
+            <textarea name="notes" rows="4" placeholder="How did the practice feel? Any observations about alignment, breath, or sensations..."></textarea>
+        </div>
+
+        <button type="submit" class="btn-primary btn-large">✨ Log Practice</button>
+    </form>
+</div>
+
+<script>
+function updateEnglishName() {
+    const select = document.getElementById('asanaSelect');
+    const englishInput = document.getElementById('englishName');
+    const customGroup = document.getElementById('customAsanaGroup');
+
+    if (select.value === 'custom') {
+        customGroup.style.display = 'block';
+        englishInput.value = '';
+    } else {
+        customGroup.style.display = 'none';
+        const option = select.options[select.selectedIndex];
+        englishInput.value = option.dataset.english || '';
+    }
+}
+</script>
+{% endblock %}
